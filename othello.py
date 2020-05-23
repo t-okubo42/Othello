@@ -1,17 +1,30 @@
-WHITE = 0
-BLACK = 1
-BOARD_SIZE = 8
+white = 0
+black = 1
+board_size = 8
 
 class ReversiBoard(object):
     def __init__(self):
-        # 2次元リストを生成する
-        # 各要素の初期値はNone
         self.cells = []
-        for i in range(BOARD_SIZE):
-            self.cells.append([None for i in range(BOARD_SIZE)])
+        for i in range(board_size):
+            self.cells.append([None for i in range(board_size)])
 
-        # 4つの石を初期配置する
-        self.cells[3][3] = WHITE
-        self.cells[3][4] = BLACK
-        self.cells[4][3] = BLACK
-        self.cells[4][4] = WHITE
+        self.cells[3][3] = white
+        self.cells[3][4] = black
+        self.cells[4][3] = black
+        self.cells[4][4] = white
+
+class ReversiBoard(object):
+    def put_disk(self, x, y, player):
+
+        if self.cells[y][x] is not None:
+            return False
+
+        flippable = self.list_flippable_disks(x, y, player)
+        if flippable == []:
+            return False
+
+        self.cells[y][x] = player
+        for x,y in flippable:
+            self.cells[y][x] = player
+
+        return True
